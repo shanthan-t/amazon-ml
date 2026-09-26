@@ -1,0 +1,6 @@
+# Exact dependencies for P6+exact test inference path.
+# Pinned to locally-installed versions for reproducibility.
+pandas==2.3.3
+rapidfuzz==3.14.3
+scipy==1.17.1
+numpy==2.4.2

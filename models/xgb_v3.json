@@ -1,0 +1,61 @@
+{
+  "model_type": "xgboost_v2",
+  "feature_names": [
+    "name_exact",
+    "name_token_jaccard",
+    "name_fuzz_ratio",
+    "name_prefix6",
+    "name_prefix4",
+    "name_token_sort_ratio",
+    "name_token_set_ratio",
+    "name_partial_ratio",
+    "name_common_tokens",
+    "name_common_token_ratio",
+    "name_first_word_match",
+    "address_exact",
+    "address_token_jaccard",
+    "address_fuzz_ratio",
+    "address_token_sort_ratio",
+    "numeric_jaccard",
+    "country_equal",
+    "name_length_ratio",
+    "name_length_gap",
+    "address_length_ratio",
+    "address_length_gap",
+    "s1_address_missing",
+    "target_address_missing"
+  ],
+  "threshold": 0.3782208561897278,
+  "xgb_model_file": "xgb_v3.xgb",
+  "training": {
+    "sample_start": 0,
+    "sample_rows": 200000,
+    "neg_subsample_rate": 10,
+    "negative_inverse_probability_weight": 10,
+    "max_postings_per_key": 500,
+    "blocking_routes": [
+      "E",
+      "P6",
+      "P4",
+      "ST",
+      "W"
+    ]
+  },
+  "validation": {
+    "threshold": 0.3782208561897278,
+    "macro_f0_5": 0.8374922713807648,
+    "validation_entities": 40117,
+    "validation_entities_with_candidate_examples": 39464,
+    "validation_entities_without_candidate_examples": 653,
+    "threshold_selection": "official per-S1 macro F0.5 over every held-out Source-1 row; all positive candidates retained; sampled negative false positives inverse-probability weighted; singleton empty credit estimated with exp(-weighted false positives)",
+    "estimated_true_positives": 97962.0,
+    "estimated_false_positives": 6610.0,
+    "estimated_false_negatives": 41031.0,
+    "validation_singletons": 2173,
+    "estimated_singleton_empty_prediction_rate": 0.9783718768517395,
+    "candidate_recall": 0.7562611066744368,
+    "validation_ground_truth_pairs": 138993,
+    "validation_zero_candidate_s1": 142,
+    "best_iteration": 319
+  }
+}

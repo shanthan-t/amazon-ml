@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Large Datasets & Storage (exceeds GitHub limits)
+dataset/
+*.tsv
+*.csv
+*.zip
+*.tar
+*.gz
+*.7z
+
+# SQLite Databases & Indexes (multi-GB files)
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+*.db
+
+# Output and Reports
+output*/
+reports/
+logs/
+*.log
+
+# Caches and IDEs
+.pytest_cache/
+.coverage
+htmlcov/
+.idea/
+.vscode/
+.DS_Store
+
+# Large temporary model training samples
+models/training_sample/

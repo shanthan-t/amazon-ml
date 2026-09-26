@@ -1,0 +1,15 @@
+# Core data processing & string matching
+numpy>=1.26.0
+pandas>=2.2.0
+scipy>=1.11.0
+rapidfuzz>=3.0.0
+tqdm>=4.66.0
+
+# GPU-accelerated XGBoost (supports CUDA hist)
+xgboost>=2.0.0
+
+# Deep Learning / Transformer Bi-Encoders & Dense Retrieval (0.95+ Pipeline)
+torch>=2.1.0
+transformers>=4.36.0
+sentence-transformers>=2.2.2
+faiss-cpu>=1.7.4
