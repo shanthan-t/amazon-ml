@@ -1,17 +1,23 @@
 # Python environments/caches
 .venv/
 __pycache__/
+*.pyc
 *.py[cod]
 .pytest_cache/
 
-# Competition data: never publish train/test rows
+# Competition data
+dataset/
+data/
+local_data/
+local_artifacts/
+local_outputs/
 train.csv
 test.csv
-dataset/
-**/train_source*.tsv
-**/test_source*.tsv
 
-# Large external retrieval artifacts copied from the Linux inference host
+# Databases and large artifacts
+*.sqlite
+*.sqlite3
+*.db
 artifacts/
 native/icu/*.dll
 native/icu/*.zip
@@ -22,16 +28,20 @@ outputs/
 checkpoints/
 *.log
 *.tmp
+candidate_pairs.tsv
+matching_results.tsv
 **/candidate_pairs.tsv
 **/matching_results.tsv
 **/checkpoint.json
 **/worker_manifest.json
 **/inference_manifest.json
 
-# Training products and local models outside the four frozen folds
+# Training products and large shards
 training_shards/
 training_build/
 production_run_v2/
 features.npy
 labels.npy
+*.npy
+*.npz
 *.parquet

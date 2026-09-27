@@ -8,5 +8,5 @@ param(
 $ErrorActionPreference = "Stop"
 $Repo = Split-Path -Parent $PSScriptRoot
 Set-Location $Repo
-& (Join-Path $Repo ".venv\Scripts\python.exe") -m windows_inference.benchmark --source1 (Resolve-Path $Source1).Path --output $Output --workers $Workers --sample-rows $SampleRows --budget-minutes $BudgetMinutes
+& (Join-Path $Repo ".venv\Scripts\python.exe") -m src.benchmark --source1 (Resolve-Path $Source1).Path --output $Output --workers $Workers --sample-rows $SampleRows --budget-minutes $BudgetMinutes
 if ($LASTEXITCODE -ne 0) { throw "Benchmark failed." }

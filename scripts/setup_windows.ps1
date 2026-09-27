@@ -44,6 +44,6 @@ if ($MissingDlls.Count -gt 0) {
 }
 
 Write-Host "Checking Python packages, ICU version/transliteration, model hashes, and copied retrieval artifacts..."
-& $Vpy -m windows_inference.setup_check
+& $Vpy -m src.setup_check
 if ($LASTEXITCODE -ne 0) { throw "Setup integrity checks failed. Read the missing-artifact report above." }
-Write-Host "Windows V6 environment is ready. Run parity before inference: .\.venv\Scripts\python.exe -m windows_inference.verify_parity"
+Write-Host "Windows V6 environment is ready. Run parity before inference: .\.venv\Scripts\python.exe -m src.verify_parity"
