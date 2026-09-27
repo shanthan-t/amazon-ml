@@ -13,7 +13,8 @@
 | Property | Value |
 |----------|-------|
 | Historical runtime snapshot | `origin/final-v6-submission` `ea3bfe67d6b034afa8ab0d5d084b48c5dad62a72` |
-| Consolidation branch | `consolidate-final-v6` |
+| Consolidation branch | `consolidate-final-v6` `0146491d7dbbd7f509b4223898f4da34300088ff` |
+| Canonical `main` | `8d0dffbbd42fb195c2cce6c11188898db681dc43` (merged + pushed) |
 | Package directory | `windows_inference/` renamed to `src/` (module bodies unchanged except worker launch module name) |
 | Training code | `training/` |
 | Index builders | `indexing/` |
@@ -200,6 +201,7 @@ instead of 0.98 (line 9: `np.where(features[:,27]>0, np.float32(.99), np.float32
 | Size | 2,125,693 bytes |
 | SHA-256 | `7bb56d6fe0964b4c51aa1922d1ad4b8034586f2e41db5d876c85d80d625bc605` |
 | Feature count | 39 (asserted at load: `m.num_features() != 39`) |
+| Tree count | 500 |
 
 ### fold1.ubj
 | Property | Value |
@@ -208,6 +210,7 @@ instead of 0.98 (line 9: `np.where(features[:,27]>0, np.float32(.99), np.float32
 | Size | 2,130,731 bytes |
 | SHA-256 | `19fea195aa2ccb3875d1e307f7cf1dd858162cc242e088759acee9f7df710ff3` |
 | Feature count | 39 |
+| Tree count | 500 |
 
 ### fold2.ubj
 | Property | Value |
@@ -216,6 +219,7 @@ instead of 0.98 (line 9: `np.where(features[:,27]>0, np.float32(.99), np.float32
 | Size | 2,126,376 bytes |
 | SHA-256 | `9bc18f713e5f9faa5ce3f3a0aed4160e7d1d93f3cae79169324daed08331c0e6` |
 | Feature count | 39 |
+| Tree count | 500 |
 
 ### fold3.ubj
 | Property | Value |
@@ -224,9 +228,10 @@ instead of 0.98 (line 9: `np.where(features[:,27]>0, np.float32(.99), np.float32
 | Size | 2,146,913 bytes |
 | SHA-256 | `8e21913e605c3d9af3eef493cce78ea4280d9756305fd427001897dad8ea6ef7` |
 | Feature count | 39 |
+| Tree count | 500 |
 
 All four model SHA-256 values were independently recomputed and verified
-during this audit.
+during this audit. Tree counts (500) re-verified 2026-09-27 without retraining.
 
 ---
 
@@ -594,4 +599,18 @@ Full `src.verify_parity` / `src.setup_check` artifact-size verification still
 requires copied retrieval indexes and target store (not in Git).
 
 ### Tracked files
-See `git ls-files` on `consolidate-final-v6`. Runtime package lives under `src/`; training under `training/`; index builders under `indexing/`. The four fold models remain under `models/B_cross_script/`.
+65 files on `main` / `consolidate-final-v6`. Runtime package lives under `src/`; training under `training/`; index builders under `indexing/`. The four fold models remain under `models/B_cross_script/`.
+
+### Local workspace cleanup (2026-09-27 resume #2)
+
+GitHub/`main` was already merged and pushed when the previous agent stopped
+(usage limit) while listing parent-tree caches.
+
+Completed this session:
+- Deleted `__pycache__` and `.pytest_cache` under the parent workspace and this clone.
+- Created local tracking branch `final-v6-submission` at `ea3bfe6`.
+- Did **not** delete parent `src/`, `models/`, `output_v4/`, `v6_macro_f05/`, sqlite indexes, `dataset/`, `windows_transfer/`, or `training_v2/` (KEEP or REVIEW).
+- Did **not** move multi-GB indexes into `local_artifacts/` (path-break risk).
+- Did **not** delete `origin/archive/pre-windows-emergency`.
+- Smoke re-run: **PASS**. RUNTIME SEMANTICS CHANGED: **NO**.
+- Final Windows `matching_results` / `candidate_pairs` backups remain on the Windows machine documented in sections 11–12; they were not present in this Linux clone and were not hashed or modified.

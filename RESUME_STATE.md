@@ -1,86 +1,86 @@
 # Resume State — Final V6 Consolidation
 
-**Inspected:** 2026-09-27 (this session)
-**Canonical git repo:** `amazon_ml_clean_repo/` (workspace root is not a git repository)
+**Inspected:** 2026-09-27 (this session, after the 16:39 usage-limit stop)
+**Canonical git repo:** `amazon_ml_clean_repo/` (now the agent workspace root)
 
 ## Current branch
-`main` (in-progress merge; not committed)
+`main` (clean; matches `origin/main`)
 
 ## Current HEAD
-`c170d680bb7ef58f1cc675da472bc41c64498718`  
-`c170d68 Merge pull request #1 from shanthan-t/final-v6-submission`  
-Tag: `pre-final-consolidation`  
-`origin/main` == local `main` at this SHA (before this session finishes the merge)
+`8d0dffbbd42fb195c2cce6c11188898db681dc43`  
+`8d0dffb Merge consolidate-final-v6 into main as the canonical V6 project.`
 
 ## Uncommitted files
-- In-progress merge of `consolidate-final-v6` into `main` (`MERGE_HEAD` = `8b9e84a`)
-- Working tree matches `consolidate-final-v6` (no extra unstaged edits vs that commit)
-- Untracked: `training_v2/` (full historical production package copy; not staged)
-- Untracked/ignored: `__pycache__/`, `windows_transfer/artifacts/`
+None at inspection (working tree clean). Ignored only:
+- `indexing/__pycache__/`, `src/__pycache__/`, `training/__pycache__/`
+- `training_v2/` (KEEP/REVIEW local duplicate of historical `production_v2`)
+- `windows_transfer/artifacts/` (large runtime indexes; gitignored)
 
 ## Staged files
-Merge index (conflicts already resolved): rename `windows_inference/` → `src/`, add `training/` + `indexing/`, add Linux ICU `.so` libraries, truncated docs, `requirements-windows.txt` → `requirements.txt`, script module-path updates, delete `PC_CLEANUP_PLAN.md`
+None.
 
 ## Existing consolidation branch
 `consolidate-final-v6` (local + `origin/consolidate-final-v6`)
 
 ## Latest consolidation commit
-`8b9e84aebe71ce12491ce8cdfe7a78d44e9efffd`  
-Message: `Consolidate final V6 runtime, training, and reproducibility tooling`  
-Already pushed.
+`0146491d7dbbd7f509b4223898f4da34300088ff`  
+Message: `Fix src package launch paths and restore final V6 documentation.`  
+Already pushed. Merged into `main` as `8d0dffb`.
 
 ## Main SHA
-`c170d680bb7ef58f1cc675da472bc41c64498718`
+`8d0dffbbd42fb195c2cce6c11188898db681dc43` (`origin/main` identical)
 
 ## final-v6-submission SHA
-`ea3bfe67d6b034afa8ab0d5d084b48c5dad62a72` (`origin/final-v6-submission`; no local branch named `final-v6-submission`)
+`ea3bfe67d6b034afa8ab0d5d084b48c5dad62a72` (`origin/final-v6-submission`; no local branch at inspection)
 
-## Completed phases
-1. Audit of final-v6-submission (original forensic `AUDIT_FINAL_V6.md` exists on `ea3bfe6`)
-2. Identify essential runtime (package rename to `src/` of unchanged modules)
-3. Identify essential training files (`training/*.py` copied from production_v2)
-4. Identify essential index builders (`indexing/build_target_index.py`, `indexing/build_address_index.py`)
-5. Identify essential validation (`src/validate.py`, `src/verify_parity.py`, `training/validate_*.py`)
-6. Partial docs (`README.md`, `FINAL_V6_FILE_MANIFEST.md`, `TRAINING_ARTIFACTS.md`, gutted `AUDIT_FINAL_V6.md`)
-7. requirements renamed/extended (`pandas`, `scipy`, `pytest`)
-8. Four models present with original SHA256s
-9. Consolidation branch created, committed, and pushed
-10. Merge into `main` started; conflicts marked fixed; **commit never concluded**
+## Completed phases (before this session)
+1. Audit of `final-v6-submission` (`AUDIT_FINAL_V6.md` restored from `ea3bfe6` + consolidation notes)
+2. Audit of local project (partial; `LOCAL_PRE_CLEANUP_MANIFEST.txt` is a parent `find` dump from 16:27)
+3. Essential runtime identified (`src/` rename of `windows_inference/`)
+4. Essential training identified (`training/*.py`)
+5. Essential index builders identified (`indexing/build_target_index.py`, `indexing/build_address_index.py`)
+6. Essential evaluation/validation identified (`src/validate.py`, `src/verify_parity.py`, `training/validate_*.py`)
+7. Obsolete DL/FAISS/SageMaker not present on canonical branch (history only)
+8. Docs restored (`README.md`, `AUDIT_FINAL_V6.md`, `FINAL_V6_FILE_MANIFEST.md`, `TRAINING_ARTIFACTS.md`, `README_WINDOWS.md`)
+9. `requirements.txt` (runtime pins + pandas/scipy/pytest)
+10. Four models + SHA-256 verified in the 16:39 session
+11. Smoke imports / ICU / policy / `-m src.worker` verified in the 16:39 session
+12. `consolidate-final-v6` committed (`8b9e84a`, `0146491`) and pushed
+13. `main` merged (`8d0dffb`) and pushed; `origin/main` == local `main`
+14. Leftover `windows_inference` launch strings fixed to `-m src.worker`
 
-## Incomplete phases
-1. Finish/abort the uncommitted `main` merge
-2. Restore comprehensive docs gutted in `8b9e84a` (AUDIT 571→23 lines; MANIFEST 179→14 lines)
-3. Fix leftover `windows_inference` subprocess module names in `src/runner.py` and `src/benchmark.py` (rename incomplete)
-4. Fix `scripts/setup_windows.ps1` still installing `requirements-windows.txt`
-5. Update remaining docs (`README_WINDOWS.md`, `parity_fixture/README.md`)
-6. Smoke-test imports / ICU / policy / model hashes
-7. Decide `training_v2/` (KEEP/REVIEW local; do not commit duplicate + `urgent_inference.py`)
-8. Merge consolidation to `main` only after verification
-9. Push updated `main` if needed
-10. Local workspace cleanup outside the git repo
-11. Final audit update with complete hashes/tree counts
+## Incomplete phases (where the previous agent stopped)
+The 16:39 agent hit the usage limit **during local workspace cleanup** (listing parent caches, old `models/`, `output_v4/`, sqlite indexes). GitHub/`main` was already updated.
 
-## Files already deleted (in consolidation commit / merge index)
+Still unfinished at inspection:
+1. Local cleanup of caches (`__pycache__`, `.pytest_cache`)
+2. Classification of parent-tree KEEP vs REVIEW vs DELETE (do not move multi-GB indexes)
+3. Local `final-v6-submission` tracking branch
+4. Final audit note for local cleanup + current SHAs
+5. Manifest stale lines (`PC_CLEANUP_PLAN.md` still listed; tracked-file count still 46)
+
+## Files already deleted (git, consolidation)
 - Package directory name `windows_inference/` (content retained as `src/`)
-- `requirements-windows.txt` (renamed to `requirements.txt`)
-- `PC_CLEANUP_PLAN.md` (present on `main`, absent on consolidation branch)
+- `requirements-windows.txt` (replaced by `requirements.txt`)
+- `PC_CLEANUP_PLAN.md`
 
-## Files already added
-- `training/*.py` (10 scripts)
-- `indexing/build_address_index.py`, `indexing/build_target_index.py`
+## Files already added (git, consolidation)
+- `training/*.py` + `training/__init__.py`
+- `indexing/build_address_index.py`, `indexing/build_target_index.py`, `indexing/__init__.py`
 - `native/icu/libicu*.so.77` (Linux ICU 77.1)
-- `TRAINING_ARTIFACTS.md`
-- Short replacements for README / AUDIT / MANIFEST
+- `TRAINING_ARTIFACTS.md`, `RESUME_STATE.md`
 
-## Files still requiring review
-- `training_v2/` (untracked duplicate of production training + extras)
-- Parent workspace: `v6_macro_f05/`, large `*.sqlite3`, `src/`, `models/`, `output_v4/`, `dataset/`
-- Whether Linux ICU `.so` files should remain tracked (already committed; needed for Linux ICU pin)
-- `src/runner.py` / `src/benchmark.py` still launching `-m windows_inference.worker`
+## Files still requiring review (local, not git)
+- Parent `src/` (historical V2/V4 blockers/trainers; not canonical)
+- Parent `models/` (`xgb_v2`/`v3`/`v4`, logistic JSON)
+- Parent `output_v4/`
+- Parent `tests/`, `reports/`, `pytest.ini`
+- `v6_macro_f05/` experiment tree (KEEP: training provenance + `production_v2` / `production_run_v2`)
+- `amazon_ml_clean_repo/training_v2/` (ignored duplicate + `urgent_inference.py`)
+- Intermediate sqlite: `phase2_index_checkpoint.sqlite3`, `phase2_index_resume.sqlite3`, `phase2_name_routes_train.sqlite3`, `phase2_test_exact_index.sqlite3`, `phase2_test_names.sqlite3`, `phase2_test_p6_routes.sqlite3`
+- `archive/pre-windows-emergency` still exists locally and on origin (AUDIT previously said it was deleted; leave it)
 
 ## Resume decision (this session)
-- Do **not** discard the consolidation commit.
-- Abort the unfinished merge on `main` (it is identical to `8b9e84a` and was never verified).
-- Continue on existing `consolidate-final-v6`.
-- Restore docs from `origin/final-v6-submission` and complete the `src/` rename.
-- Do not retrain or rerun full inference.
+- Do **not** rewind `main` or `consolidate-final-v6`.
+- Do **not** retrain or rerun full inference.
+- Continue only: local cache cleanup, KEEP/REVIEW classification, smoke re-verify, audit/manifest/resume updates, local `final-v6-submission` branch, commit+push if docs change.

@@ -1,9 +1,9 @@
 # FINAL V6 FILE MANIFEST
 
-**Generated:** 2026-09-27T16:11+05:30
-**Branch:** `consolidate-final-v6`
-**Commit:** (updated by consolidation; see git log)
-**Total tracked files:** 46
+**Generated:** 2026-09-27T16:55+05:30
+**Branch:** `main` (canonical; also `consolidate-final-v6`)
+**Commit:** see `git log` / `RESUME_STATE.md`
+**Total tracked files:** 65
 
 ---
 
@@ -91,7 +91,13 @@
 
 | File | Why |
 |------|-----|
-| `PC_CLEANUP_PLAN.md` | Operational note about cleaning borrowed PC; not part of inference pipeline |
+| `TRAINING_ARTIFACTS.md` | Documents optional training/index reproduction; not used at inference |
+| `RESUME_STATE.md` | Consolidation resume forensic notes |
+| `indexing/__init__.py` | Package marker for `python -m indexing.*` |
+| `training/__init__.py` | Package marker for `python -m training.*` |
+| `native/icu/libicu*.so.77` | Vendored Linux ICU 77.1 used by Linux smoke/parity; Windows uses official DLLs |
+
+`PC_CLEANUP_PLAN.md` was removed from Git during consolidation (borrowed-PC ops note; not part of V6).
 
 ---
 
@@ -162,7 +168,20 @@ benchmark.py → runner (atomic, partition, sha)
 
 ## UNKNOWN_REQUIRES_REVIEW
 
-**None.** Every tracked file has been inspected and classified.
+Every **tracked** file on `main` has been classified.
+
+Local parent-tree items (not in Git; intentionally kept):
+
+| Path | Decision |
+|------|----------|
+| `../dataset/` | KEEP — competition data |
+| `../v2_test_index.sqlite3`, `../v2_train_index.sqlite3`, `../phase2_test_numeric_address.sqlite3`, `../phase2_train_numeric_address.sqlite3` | KEEP — runtime/training indexes |
+| `../windows_transfer/` | KEEP — transfer copies of test indexes + target store |
+| `../v6_macro_f05/production_v2/`, `../v6_macro_f05/production_run_v2/` | KEEP — training provenance and local artifacts |
+| `training_v2/` (ignored in this clone) | REVIEW — duplicate of `production_v2` plus `urgent_inference.py` |
+| `../src/`, `../models/`, `../tests/`, `../reports/`, `../output_v4/` | REVIEW — historical V2/V4, not canonical V6 |
+| `../phase2_index_checkpoint.sqlite3`, `../phase2_index_resume.sqlite3`, `../phase2_name_routes_train.sqlite3`, `../phase2_test_exact_index.sqlite3`, `../phase2_test_names.sqlite3`, `../phase2_test_p6_routes.sqlite3` | REVIEW — intermediate index builds; do not delete |
+| `origin/archive/pre-windows-emergency` | REVIEW — DL/FAISS history branch; not deleted this session |
 
 ## REQUIRED_TRAINING — Essential training / evaluation path
 
