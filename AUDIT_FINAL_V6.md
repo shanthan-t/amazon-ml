@@ -5,6 +5,23 @@
 
 ---
 
+
+---
+
+## Consolidation (2026-09-27 resume)
+
+| Property | Value |
+|----------|-------|
+| Historical runtime snapshot | `origin/final-v6-submission` `ea3bfe67d6b034afa8ab0d5d084b48c5dad62a72` |
+| Consolidation branch | `consolidate-final-v6` |
+| Package directory | `windows_inference/` renamed to `src/` (module bodies unchanged except worker launch module name) |
+| Training code | `training/` |
+| Index builders | `indexing/` |
+| Runtime semantics changed | **NO** |
+| Retrain / full inference | **NOT run** |
+
+The four `models/B_cross_script/fold{0-3}.ubj` files and SHA-256 values are unchanged.
+
 ## 1. Repository Identity
 
 | Property | Value |
@@ -12,7 +29,7 @@
 | Remote URL | `https://github.com/shanthan-t/amazon-ml` |
 | Source branch | `main` |
 | Source Git SHA | `c79e66b1b0b71dcf3eba3c1035e2e7843f6b7d21` |
-| Clean branch | `final-v6-submission` |
+| Clean branch | `final-v6-submission` (historical snapshot) |
 | Configuration ID | `v6-top25-xgb39-icu-global98-20260927-v1` |
 
 ---
@@ -41,26 +58,26 @@
 
 | Component | Module |
 |-----------|--------|
-| Inference entry point | `windows_inference.runner` (`runner.py:main()`) |
-| Worker entry point | `windows_inference.worker` (`worker.py:worker()`) |
-| Retrieval | `windows_inference.retrieval` (`retrieval.py:Retriever`) |
-| Target store | `windows_inference.target_store` (`target_store.py:MappedRetriever`) |
-| Normalization | `windows_inference.normalization` (`normalization.py`) |
-| Base features (26) | `windows_inference.base_features` (`base_features.py:compute_pair_features()`) |
-| Extended features (39) | `windows_inference.features` (`features.py:FeatureEngine`) |
-| Optimized features | `windows_inference.optimized_features` (`optimized_features.py:OptimizedFeatureEngine`) |
-| ICU transliteration | `windows_inference.icu` (`icu.py:ICU`) |
-| Decision policy | `windows_inference.policy` (`policy.py:choose()`) |
-| Output writer | `windows_inference.policy` (`policy.py:OutputWriter`) |
-| Merge | `windows_inference.merge` (`merge.py:merge()`) |
-| Validation | `windows_inference.validate` (`validate.py:validate()`) |
-| Configuration | `windows_inference.config` (`config.py`) |
+| Inference entry point | `src.runner` (`runner.py:main()`) |
+| Worker entry point | `src.worker` (`worker.py:worker()`) |
+| Retrieval | `src.retrieval` (`retrieval.py:Retriever`) |
+| Target store | `src.target_store` (`target_store.py:MappedRetriever`) |
+| Normalization | `src.normalization` (`normalization.py`) |
+| Base features (26) | `src.base_features` (`base_features.py:compute_pair_features()`) |
+| Extended features (39) | `src.features` (`features.py:FeatureEngine`) |
+| Optimized features | `src.optimized_features` (`optimized_features.py:OptimizedFeatureEngine`) |
+| ICU transliteration | `src.icu` (`icu.py:ICU`) |
+| Decision policy | `src.policy` (`policy.py:choose()`) |
+| Output writer | `src.policy` (`policy.py:OutputWriter`) |
+| Merge | `src.merge` (`merge.py:merge()`) |
+| Validation | `src.validate` (`validate.py:validate()`) |
+| Configuration | `src.config` (`config.py`) |
 | Frozen configuration | `config/frozen_configuration.json` |
-| Checkpoint I/O | `windows_inference.safe_io` (`safe_io.py:atomic()`) |
-| Setup verification | `windows_inference.setup_check` (`setup_check.py:main()`) |
-| Parity verification | `windows_inference.verify_parity` (`verify_parity.py:verify()`) |
-| Progress monitor | `windows_inference.progress` (`progress.py:show()`) |
-| Benchmark | `windows_inference.benchmark` (`benchmark.py:benchmark()`) |
+| Checkpoint I/O | `src.safe_io` (`safe_io.py:atomic()`) |
+| Setup verification | `src.setup_check` (`setup_check.py:main()`) |
+| Parity verification | `src.verify_parity` (`verify_parity.py:verify()`) |
+| Progress monitor | `src.progress` (`progress.py:show()`) |
+| Benchmark | `src.benchmark` (`benchmark.py:benchmark()`) |
 
 ---
 
@@ -163,7 +180,7 @@ instead of 0.98 (line 9: `np.where(features[:,27]>0, np.float32(.99), np.float32
 
 | Property | Value |
 |----------|-------|
-| Implementation | `windows_inference/icu.py` |
+| Implementation | `src/icu.py` |
 | ICU binding | Direct C API via `ctypes` (not PyICU) |
 | ICU version | 77.1.0.0 (asserted at runtime) |
 | Transform | `Any-Latin; Latin-ASCII` |
@@ -360,7 +377,7 @@ results.
 | Pre-trained language models | **NOT USED.** No transformers, BERT, or embedding models. |
 | GPU usage | **NOT USED.** CPU-only XGBoost. No CUDA/GPU imports in the final execution path. |
 
-The audit covers only the final V6 execution path (`windows_inference/`).
+The audit covers only the final V6 execution path (`src/`).
 Old unused code in the `main` branch (DL/Bi-Encoder/FAISS) is not part of
 this audit.
 
@@ -386,7 +403,7 @@ git checkout final-v6-submission
 .\scripts\setup_windows.ps1
 
 # 4. Verify parity
-.\.venv\Scripts\python.exe -m windows_inference.verify_parity
+.\.venv\Scripts\python.exe -m src.verify_parity
 
 # 5. Run inference
 .\scripts\run_windows.ps1 -Source1 <path\to\test_source1.tsv> -RunDir runs\full_v6 -Workers 24
@@ -475,3 +492,106 @@ checksums and both output file checksums have been independently verified.
 
 The preserved copies at `C:\Users\Indu\Desktop\AMAZON_ML_FINAL_SUBMISSION\`
 have identical SHA-256 values to the originals.
+
+---
+
+## 21. Repository Consolidation (2026-09-27T16:14+05:30)
+
+### Objective
+
+Make `final-v6-submission` the canonical `main` branch. Remove all
+obsolete DL/FAISS/V5 material from the active repository state. Ensure
+the repository immediately communicates that this is the final V6
+39-feature XGBoost ensemble implementation.
+
+### Historical V6 commit
+
+`14affdeba08cf85e1bfe7c0fef5243c3727deb8e` — preserved in Git history.
+
+### Clean canonical V6 commit
+
+`d92afc036ae428971636b9300d901fe77e9c72f4` (pre-amend) — recorded after this section is committed.
+
+### Consolidation actions
+
+1. **Full dependency audit**: Traced every import from `runner.py` →
+   `worker.py` → all modules. Confirmed 46 tracked files are all required.
+2. **Model SHA-256 verification**: All four model hashes independently
+   recomputed and matched `config.py` values.
+3. **DL/FAISS/torch/transformers scan**: Zero references found in any
+   tracked `.py`, `.txt`, `.ps1`, or `.sh` file.
+4. **Large file audit**: No tracked file exceeds 25 MB. All large runtime
+   artifacts are correctly `.gitignore`d and documented in `RUNTIME_ARTIFACTS.md`.
+5. **Configuration verification**: `GLOBAL_THRESHOLD=0.98`,
+   `NUMERIC_CONFLICT_THRESHOLD=0.99`, `MAX_MATCHES=11`, `TOP_RARE_ADDRESS=25`,
+   39-feature order, 4-model averaging — all confirmed from code.
+6. **File manifest created**: `FINAL_V6_FILE_MANIFEST.md` classifies every
+   tracked file with import dependency graph.
+7. **Removed**: `PC_CLEANUP_PLAN.md` (operational note for borrowed PC,
+   not part of V6 pipeline).
+8. **Promoted**: `main` fast-forwarded to `final-v6-submission` HEAD.
+9. **Branch cleanup**: `archive/pre-windows-emergency` deleted (all commits
+   already reachable from `final-v6-submission` history).
+
+### Files removed
+
+| File | Reason |
+|------|--------|
+| `PC_CLEANUP_PLAN.md` | Operational note for borrowed PC cleanup; references `C:\Users\Indu\Desktop`; not part of V6 inference |
+
+### Files added
+
+| File | Purpose |
+|------|---------|
+| `FINAL_V6_FILE_MANIFEST.md` | Complete dependency-audited classification of every tracked file |
+
+### Branches deleted
+
+| Branch | Commit | Reason |
+|--------|--------|--------|
+| `archive/pre-windows-emergency` (local + remote) | `e5eaccc` | Old DL/FAISS pipeline commit; already ancestor of final-v6-submission |
+
+### Branches retained
+
+| Branch | Points to |
+|--------|-----------|
+| `final-v6-submission` | Historical successful runtime snapshot (`ea3bfe6`) |
+| `consolidate-final-v6` | Final runtime + essential training/index/evaluation tooling |
+| `main` | Canonical consolidated project (updated after verification) |
+
+### Dependencies
+
+Final `requirements.txt`:
+```
+numpy==2.4.2
+xgboost==3.4.1
+rapidfuzz==3.14.3
+psutil==7.2.2
+pandas==2.3.3
+scipy==1.17.1
+pytest==8.3.4
+```
+
+No torch, transformers, sentence-transformers, or faiss dependencies.
+The V6 runtime imports numpy, xgboost, rapidfuzz, and psutil. pandas/scipy/pytest support training and checks.
+
+### Runtime semantics changed
+
+**NO.** Retrieval, top-25 rare-address additions, 39 float32 features, ICU
+`Any-Latin; Latin-ASCII`, four-model averaging, thresholds 0.98/0.99, and
+`max_matches=11` are unchanged. The package directory was renamed
+`windows_inference/` → `src/`. Subprocess worker launches now use
+`-m src.worker` so inference still starts after the rename. Models and
+hashes are unchanged. No retrain and no full inference were run.
+
+### Smoke/parity test
+
+Linux smoke (this session): imports, 39 FEATURE_NAMES, policy 0.98/0.99/max 11,
+ICU 77.1 `Bengaluru`→`bengaluru`, four model SHA-256 + 39 features / 500 trees,
+and `-m src.worker` launch strings: **PASS**.
+
+Full `src.verify_parity` / `src.setup_check` artifact-size verification still
+requires copied retrieval indexes and target store (not in Git).
+
+### Tracked files
+See `git ls-files` on `consolidate-final-v6`. Runtime package lives under `src/`; training under `training/`; index builders under `indexing/`. The four fold models remain under `models/B_cross_script/`.

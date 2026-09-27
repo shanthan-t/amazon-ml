@@ -16,7 +16,7 @@ if ($LASTEXITCODE -ne 0 -or $VersionText.Trim() -ne $Python) {
 if (-not (Test-Path ".venv\Scripts\python.exe")) { & py $PySelector -m venv .venv }
 $Vpy = Join-Path $Repo ".venv\Scripts\python.exe"
 & $Vpy -m pip install --upgrade pip
-& $Vpy -m pip install -r requirements-windows.txt
+& $Vpy -m pip install -r requirements.txt
 if ($LASTEXITCODE -ne 0) { throw "Dependency installation failed." }
 
 # Obtain the official pinned ICU4C binary package if its required DLLs are absent.
@@ -44,6 +44,6 @@ if ($MissingDlls.Count -gt 0) {
 }
 
 Write-Host "Checking Python packages, ICU version/transliteration, model hashes, and copied retrieval artifacts..."
-& $Vpy -m windows_inference.setup_check
+& $Vpy -m src.setup_check
 if ($LASTEXITCODE -ne 0) { throw "Setup integrity checks failed. Read the missing-artifact report above." }
-Write-Host "Windows V6 environment is ready. Run parity before inference: .\.venv\Scripts\python.exe -m windows_inference.verify_parity"
+Write-Host "Windows V6 environment is ready. Run parity before inference: .\.venv\Scripts\python.exe -m src.verify_parity"

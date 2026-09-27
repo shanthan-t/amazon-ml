@@ -125,7 +125,7 @@ dependencies, downloads ICU4C 77.1, and verifies all models and artifacts.
 
 ```powershell
 # Parity verification
-.\.venv\Scripts\python.exe -m windows_inference.verify_parity
+.\.venv\Scripts\python.exe -m src.verify_parity
 
 # Benchmark (optional)
 .\scripts\benchmark_windows.ps1 -Source1 <path\to\test_source1.tsv>
@@ -159,3 +159,27 @@ dependencies, downloads ICU4C 77.1, and verifies all models and artifacts.
 - Model scoring uses `nthread=1` for determinism.
 - ICU version is pinned at 77.1 with version assertion.
 - No randomness, no sampling, no stochastic components at inference.
+
+## Repository layout (canonical)
+
+- `src/` — Final V6 inference runtime (retrieval, 39 features, ICU, ensemble, policy, merge, validate)
+- `training/` — Essential training, freeze, and evaluation scripts (do not retrain unless explicitly requested)
+- `indexing/` — Target / numeric-address / rare-address index builders
+- `models/B_cross_script/` — Four frozen 39-feature XGBoost models
+- `native/icu/` — Pinned ICU 77.1 (Windows DLLs downloaded by setup; Linux `.so` vendored)
+- `scripts/` — PowerShell wrappers
+
+## Training and index build (optional reproduction)
+
+Large indexes and training shards are local-only. See `TRAINING_ARTIFACTS.md`.
+
+```bash
+python -m indexing.build_target_index --s2 SOURCE2.tsv --s3 SOURCE3.tsv --index local_artifacts/v2_train_index.sqlite3 --numeric-index local_artifacts/phase2_train_numeric_address.sqlite3
+python -m indexing.build_address_index --source local_artifacts/v2_train_index.sqlite3 --output local_artifacts/train_address_index.sqlite3
+python -m training.train
+```
+
+Do not retrain to produce a new submission. The checked-in fold models are the submission models.
+
+Obsolete DL / FAISS / SageMaker / V5 experiment trees are not part of this branch.
+

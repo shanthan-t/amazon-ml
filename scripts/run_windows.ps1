@@ -8,7 +8,7 @@ param(
 $ErrorActionPreference = "Stop"
 $Repo = Split-Path -Parent $PSScriptRoot
 Set-Location $Repo
-$ArgsList = @("-m", "windows_inference.runner", "--source1", (Resolve-Path $Source1).Path,
+$ArgsList = @("-m", "src.runner", "--source1", (Resolve-Path $Source1).Path,
               "--run-dir", $RunDir, "--workers", "$Workers",
               "--threads-per-worker", "$ThreadsPerWorker")
 if ($Resume) { $ArgsList += "--resume" }
