@@ -17,7 +17,7 @@ This requires 64-bit CPython 3.12, creates `.venv`, installs pinned CPU dependen
 Run parity before inference:
 
 ```powershell
-.\.venv\Scripts\python.exe -m windows_inference.verify_parity
+.\.venv\Scripts\python.exe -m src.verify_parity
 ```
 
 Parity fails on any difference in normalization, candidate IDs/order, base or rare route membership, 39 float32 features, ICU strings, four fold scores, averaged score, or final policy result.
@@ -27,7 +27,7 @@ Parity fails on any difference in normalization, candidate IDs/order, base or ra
 The benchmark uses a fixed, evenly spaced test subset and the exact inference worker. Its default worker sweep is capped at 12 minutes:
 
 ```powershell
-.\.venv\Scripts\python.exe -m windows_inference.benchmark --source1 C:\data\test_source1.tsv --output runs\benchmark_v1 --workers 2,4,8,12,16 --budget-minutes 12
+.\.venv\Scripts\python.exe -m src.benchmark --source1 C:\data\test_source1.tsv --output runs\benchmark_v1 --workers 2,4,8,12,16 --budget-minutes 12
 ```
 
 Run full inference with deterministic disjoint S1 ranges; choose workers based on benchmark throughput and RAM:
@@ -63,4 +63,4 @@ Validation checks exact S1 coverage/order, TSV schema, S2/S3 ID format, candidat
 
 `WINDOWS_ARTIFACT_MANIFEST.json` records source Linux paths, file sizes and SHA-256 values. The multi-gigabyte retrieval indexes and target store should be copied PC-to-PC; rebuilding is slower. They are not placed in Git or Git LFS. Four fold models (~8.5 MB total) are safe in ordinary Git. Competition data, predictions, candidates, checkpoints, caches and training shards are excluded.
 
-The runtime modules are in `windows_inference/`; frozen settings are in `config/frozen_configuration.json`. ICU uses direct `ctypes` calls into ICU 77.1, with no transliteration fallback. The package uses CPU XGBoost and does not include DL/FAISS, geocoding, or external business data.
+The runtime modules are in `src/`; frozen settings are in `config/frozen_configuration.json`. ICU uses direct `ctypes` calls into ICU 77.1, with no transliteration fallback. The package uses CPU XGBoost and does not include DL/FAISS, geocoding, or external business data.

@@ -16,7 +16,7 @@ if ($LASTEXITCODE -ne 0 -or $VersionText.Trim() -ne $Python) {
 if (-not (Test-Path ".venv\Scripts\python.exe")) { & py $PySelector -m venv .venv }
 $Vpy = Join-Path $Repo ".venv\Scripts\python.exe"
 & $Vpy -m pip install --upgrade pip
-& $Vpy -m pip install -r requirements-windows.txt
+& $Vpy -m pip install -r requirements.txt
 if ($LASTEXITCODE -ne 0) { throw "Dependency installation failed." }
 
 # Obtain the official pinned ICU4C binary package if its required DLLs are absent.

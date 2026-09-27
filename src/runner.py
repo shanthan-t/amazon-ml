@@ -156,7 +156,7 @@ def run(source, run_dir, workers, threads, batch_size, resume):
             continue
         out_dir.parent.mkdir(parents=True, exist_ok=True)
         restart = out_dir.exists()
-        command = [sys.executable, "-m", "windows_inference.worker", "--source",
+        command = [sys.executable, "-m", "src.worker", "--source",
                    str(shard / "source1.tsv"), "--output", str(out_dir),
                    "--threads", str(threads), "--batch-size", str(batch_size)]
         if restart:

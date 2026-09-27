@@ -36,6 +36,9 @@ matching_results.tsv
 **/worker_manifest.json
 **/inference_manifest.json
 
+# Local copy of historical production_v2 (KEEP/REVIEW; not canonical)
+training_v2/
+
 # Training products and large shards
 training_shards/
 training_build/
