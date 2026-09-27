@@ -66,7 +66,6 @@ def benchmark(source1, output, worker_counts, sample_rows=4096, budget_minutes=1
             i = part["worker"]
             shard = run_dir / "shards" / f"worker_{i:04d}"
             out_dir = worker_root / f"worker_{i:04d}"
-            out_dir.mkdir(parents=True)
             log = (run_dir / f"worker_{i:04d}.log").open("w", encoding="utf-8")
             command = [sys.executable, "-m", "windows_inference.worker", "--source",
                        str(shard / "source1.tsv"), "--output", str(out_dir),

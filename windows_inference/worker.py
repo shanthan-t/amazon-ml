@@ -9,10 +9,7 @@ from .optimized_features import OptimizedFeatureEngine
 from .policy import OutputWriter, choose
 from .target_store import MappedRetriever
 from .config import INDEX, NUMERIC_INDEX, ADDRESS_INDEX, TARGET_STORE, MODEL_PATHS, CONFIG_ID
-
-def atomic(path, obj):
-    path=Path(path); tmp=path.with_suffix(path.suffix+'.tmp')
-    tmp.write_text(json.dumps(obj,indent=2)+'\n',encoding='utf-8'); os.replace(tmp,path)
+from .safe_io import atomic
 
 def sha(path):
     h=hashlib.sha256()
