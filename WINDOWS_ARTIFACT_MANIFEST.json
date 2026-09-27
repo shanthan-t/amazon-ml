@@ -1,0 +1,101 @@
+{
+  "configuration_id": "v6-top25-xgb39-icu-global98-20260927-v1",
+  "source_platform": "Linux x86_64",
+  "target_platform": "Windows x64",
+  "artifacts": [
+    {
+      "logical_name": "test_target_posting_index",
+      "artifact_type": "retrieval_index_or_store",
+      "expected_relative_destination": "artifacts/v2_test_index.sqlite3",
+      "source_linux_path": "/home/shanthant/Downloads/amazon ml codebase/v2_test_index.sqlite3",
+      "size_bytes": 4843343872,
+      "sha256": "7a730cfb910899af13ec6ddb394b332b59672a6c90d82b67df53c9713f15d716",
+      "required": true,
+      "classification": "separate-copy; not Git or Git LFS",
+      "transfer_or_rebuild": "Copy PC-to-PC. Rebuilding is possible from test target TSVs but is slower and unnecessary."
+    },
+    {
+      "logical_name": "numeric_address_route_index",
+      "artifact_type": "retrieval_index_or_store",
+      "expected_relative_destination": "artifacts/phase2_test_numeric_address.sqlite3",
+      "source_linux_path": "/home/shanthant/Downloads/amazon ml codebase/phase2_test_numeric_address.sqlite3",
+      "size_bytes": 317624320,
+      "sha256": "428100505ca0fc171587b12e1b31cc6a403fbae44401edb62cfc6f3469a4ed10",
+      "required": true,
+      "classification": "separate-copy; not Git or Git LFS",
+      "transfer_or_rebuild": "Copy PC-to-PC. Rebuild only from the test target index if transfer is unavailable."
+    },
+    {
+      "logical_name": "rare_address_overlap_index",
+      "artifact_type": "retrieval_index_or_store",
+      "expected_relative_destination": "artifacts/test_address_index.sqlite3",
+      "source_linux_path": "/home/shanthant/Downloads/amazon ml codebase/v6_macro_f05/production_run_v2/test_address_index.sqlite3",
+      "size_bytes": 2967990272,
+      "sha256": "57e7b91a53d912f367d548bd446d61d52718188a6d67592d50ff737862537c8b",
+      "required": true,
+      "classification": "separate-copy; not Git or Git LFS",
+      "transfer_or_rebuild": "Copy PC-to-PC. Rebuild from the same test target database only if required."
+    },
+    {
+      "logical_name": "target_store_offsets",
+      "artifact_type": "retrieval_index_or_store",
+      "expected_relative_destination": "artifacts/test_target_store/offsets.npy",
+      "source_linux_path": "/home/shanthant/Downloads/amazon ml codebase/v6_macro_f05/production_run_v2/test_target_store/offsets.npy",
+      "size_bytes": 79756848,
+      "sha256": "4091275db13a455decf3bb69d125afbf3f556e5d5b31711d27060d682dff7c83",
+      "required": true,
+      "classification": "separate-copy; not Git or Git LFS",
+      "transfer_or_rebuild": "Copy with the target-store records and manifest. Rebuild is unnecessary."
+    },
+    {
+      "logical_name": "target_store_records",
+      "artifact_type": "retrieval_index_or_store",
+      "expected_relative_destination": "artifacts/test_target_store/records.tsv",
+      "source_linux_path": "/home/shanthant/Downloads/amazon ml codebase/v6_macro_f05/production_run_v2/test_target_store/records.tsv",
+      "size_bytes": 998458970,
+      "sha256": "8b14da4d425601ab5c35e98264b2c3c56c308a2796cf9da3b494be5062189614",
+      "required": true,
+      "classification": "separate-copy; not Git or Git LFS",
+      "transfer_or_rebuild": "Copy with the target-store offsets and manifest. Its content SHA-256 is also recorded inside the target-store manifest."
+    },
+    {
+      "logical_name": "target_store_manifest",
+      "artifact_type": "retrieval_index_or_store",
+      "expected_relative_destination": "artifacts/test_target_store/manifest.json",
+      "source_linux_path": "/home/shanthant/Downloads/amazon ml codebase/v6_macro_f05/production_run_v2/test_target_store/manifest.json",
+      "size_bytes": 267,
+      "sha256": "eef938379e64a8617892d1c934ed2ea303d9f7fb52b02d09463d9a743ccad0da",
+      "required": true,
+      "classification": "separate-copy; not Git or Git LFS",
+      "transfer_or_rebuild": "Copy with both target-store data files."
+    },
+    {
+      "logical_name": "competition_test_source1",
+      "artifact_type": "competition_input",
+      "expected_relative_destination": "user-supplied path passed as --source1; do not put in Git",
+      "source_linux_path": "/home/shanthant/Downloads/amazon ml codebase/dataset/test/test_source1.tsv",
+      "size_bytes": 175022086,
+      "sha256": "3d4a32c54c2ca9c53fd7c2be105bf26f708f94c4d2f88eb370972a195665c2f5",
+      "required": true,
+      "classification": "separate-copy from authorized competition dataset location; not Git or Git LFS",
+      "transfer_or_rebuild": "Use the competition test_source1.tsv already available to the Windows submission environment. Pass its path to the runner."
+    }
+  ],
+  "models_in_git": [
+    {"path":"models/B_cross_script/fold0.ubj","size_bytes":2125693,"sha256":"7bb56d6fe0964b4c51aa1922d1ad4b8034586f2e41db5d876c85d80d625bc605"},
+    {"path":"models/B_cross_script/fold1.ubj","size_bytes":2130731,"sha256":"19fea195aa2ccb3875d1e307f7cf1dd858162cc242e088759acee9f7df710ff3"},
+    {"path":"models/B_cross_script/fold2.ubj","size_bytes":2126376,"sha256":"9bc18f713e5f9faa5ce3f3a0aed4160e7d1d93f3cae79169324daed08331c0e6"},
+    {"path":"models/B_cross_script/fold3.ubj","size_bytes":2146913,"sha256":"8e21913e605c3d9af3eef493cce78ea4280d9756305fd427001897dad8ea6ef7"}
+  ],
+  "windows_icu_runtime": {
+    "logical_name": "ICU4C 77.1 Windows x64 binary package",
+    "source_linux_path": "Linux reference libraries: /home/shanthant/Downloads/amazon ml codebase/v6_macro_f05/production_v2/native/libicu*.so.77 (do not copy these to Windows)",
+    "download_url": "https://github.com/unicode-org/icu/releases/download/release-77-1/icu4c-77_1-Win64-MSVC2022.zip",
+    "size_bytes": 29381458,
+    "sha256": "6b62471ed2895959d6a85c64c58572ac677734547fe8383e6e3fd706a06dc3fa",
+    "expected_runtime_files": ["native/icu/icudt77.dll", "native/icu/icuuc77.dll", "native/icu/icuin77.dll"],
+    "classification": "official pinned download performed by setup_windows.ps1; not Git/LFS/separate Linux copy",
+    "transfer_or_rebuild": "setup_windows.ps1 downloads the official ICU 77.1 Windows x64 archive, checks its SHA-256, and extracts the three required DLLs."
+  },
+  "sizes_note": "Artifact sizes are bytes on the Linux source system. SHA-256 values were computed for source files on 2026-09-27."
+}

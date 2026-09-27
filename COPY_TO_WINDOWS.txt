@@ -1,0 +1,41 @@
+Copy these files from the Linux PC to the Windows clone. Preserve relative destinations exactly. The indexes plus target store total 9,207,174,549 bytes (about 8.58 GiB). The test-source TSV is supplied separately by the competition environment.
+
+RETRIEVAL INDEXES / TARGET STORE (copy; do not rebuild):
+
+Linux source:
+/home/shanthant/Downloads/amazon ml codebase/v2_test_index.sqlite3
+Windows destination:
+artifacts/v2_test_index.sqlite3
+Size: 4,843,343,872 bytes
+SHA-256: 7a730cfb910899af13ec6ddb394b332b59672a6c90d82b67df53c9713f15d716
+
+Linux source:
+/home/shanthant/Downloads/amazon ml codebase/phase2_test_numeric_address.sqlite3
+Windows destination:
+artifacts/phase2_test_numeric_address.sqlite3
+Size: 317,624,320 bytes
+SHA-256: 428100505ca0fc171587b12e1b31cc6a403fbae44401edb62cfc6f3469a4ed10
+
+Linux source:
+/home/shanthant/Downloads/amazon ml codebase/v6_macro_f05/production_run_v2/test_address_index.sqlite3
+Windows destination:
+artifacts/test_address_index.sqlite3
+Size: 2,967,990,272 bytes
+SHA-256: 57e7b91a53d912f367d548bd446d61d52718188a6d67592d50ff737862537c8b
+
+Copy this complete Linux directory:
+/home/shanthant/Downloads/amazon ml codebase/v6_macro_f05/production_run_v2/test_target_store/
+Copy its three files to:
+artifacts/test_target_store/offsets.npy
+artifacts/test_target_store/records.tsv
+artifacts/test_target_store/manifest.json
+
+offsets.npy: 79,756,848 bytes; SHA-256 4091275db13a455decf3bb69d125afbf3f556e5d5b31711d27060d682dff7c83
+records.tsv: 998,458,970 bytes; SHA-256 8b14da4d425601ab5c35e98264b2c3c56c308a2796cf9da3b494be5062189614
+manifest.json: 267 bytes; SHA-256 eef938379e64a8617892d1c934ed2ea303d9f7fb52b02d09463d9a743ccad0da
+
+COMPETITION INPUT (keep outside Git):
+
+Use the authorized test_source1.tsv on Windows. Linux reference size: 175,022,086 bytes; SHA-256 3d4a32c54c2ca9c53fd7c2be105bf26f708f94c4d2f88eb370972a195665c2f5. Its path is passed with -Source1; it does not need to be stored under the repository.
+
+Do not copy the Linux ICU .so files. setup_windows.ps1 downloads the official ICU4C 77.1 Windows x64 package, checks its SHA-256, and extracts the three required DLLs. The four model files are already in Git and are verified by setup.

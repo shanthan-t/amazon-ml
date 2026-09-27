@@ -1,44 +1,37 @@
-# Byte-compiled / optimized / DLL files
+# Python environments/caches
+.venv/
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-
-# Environments
-.venv/
-venv/
-env/
-ENV/
-
-# Large Datasets & Storage (exceeds GitHub limits)
-dataset/
-*.tsv
-*.csv
-*.zip
-*.tar
-*.gz
-*.7z
-
-# SQLite Databases & Indexes (multi-GB files)
-*.sqlite3
-*.sqlite3-journal
-*.sqlite3-wal
-*.sqlite3-shm
-*.db
-
-# Output and Reports
-output*/
-reports/
-logs/
-*.log
-
-# Caches and IDEs
 .pytest_cache/
-.coverage
-htmlcov/
-.idea/
-.vscode/
-.DS_Store
 
-# Large temporary model training samples
-models/training_sample/
+# Competition data: never publish train/test rows
+train.csv
+test.csv
+dataset/
+**/train_source*.tsv
+**/test_source*.tsv
+
+# Large external retrieval artifacts copied from the Linux inference host
+artifacts/
+native/icu/*.dll
+native/icu/*.zip
+
+# Runtime outputs/checkpoints/logs and local benchmark samples
+runs/
+outputs/
+checkpoints/
+*.log
+*.tmp
+**/candidate_pairs.tsv
+**/matching_results.tsv
+**/checkpoint.json
+**/worker_manifest.json
+**/inference_manifest.json
+
+# Training products and local models outside the four frozen folds
+training_shards/
+training_build/
+production_run_v2/
+features.npy
+labels.npy
+*.parquet

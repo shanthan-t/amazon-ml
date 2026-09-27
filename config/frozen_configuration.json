@@ -1,0 +1,17 @@
+{
+  "configuration_id": "v6-top25-xgb39-icu-global98-20260927-v1",
+  "candidate_generation": {
+    "base_routes": ["E", "P6", "P4", "ST", "W", "AN"],
+    "posting_caps": {"base": 500, "rare_address_token": 5000},
+    "rare_address_token_selection": "two lowest-frequency eligible address tokens, stable sorted order",
+    "rare_address_filter": "at least two shared nonnumeric address tokens and (token Dice >= 0.55 or address fuzz ratio >= 70)",
+    "rare_address_pool_over_500": "discard rare-address pool for this S1",
+    "top_rare_address_additions": 25,
+    "top25_subtracts_baseline_before_cap": true
+  },
+  "features": {"count": 39, "dtype": "float32", "icu_features": 3},
+  "icu": {"version": "77.1", "transform": "Any-Latin; Latin-ASCII", "binding": "direct ICU C API via ctypes"},
+  "models": {"family": "B_cross_script", "count": 4, "score": "arithmetic mean of four probabilities"},
+  "decision_policy": {"global_threshold": 0.98, "numeric_conflict_threshold": 0.99, "max_matches": 11},
+  "test_source_rows_linux_verified": 1732544
+}
